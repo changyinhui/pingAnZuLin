@@ -1,8 +1,10 @@
 package pingAnZuLin;
 
+import java.util.Arrays;
+
 public class MySort {
     public static void main(String[] args) {
-        int[] nums = new int[]{7,6,5,4,3,2,1};
+        int[] nums = new int[]{1,6,4,5,3,2,7};
         //冒泡
         int[] a = nums.clone();
         bubble(a);
@@ -23,7 +25,51 @@ public class MySort {
         quick(d,0,d.length - 1);
         for (int i : d)  System.out.print(i+ " ");
 
+        //堆排序
+        int[] e = nums.clone();
+        heap(e);
+        System.out.println(Arrays.toString(e));;
 
+
+    }
+
+    private static void heap(int[] array) {
+        int arrHeapSize = array.length;
+        int pos = arrHeapSize / 2 ;
+        while(arrHeapSize >0) {
+            //自底向上，创建最大堆。
+            for (int i = arrHeapSize; i >= 0; i--) {
+                maxHeapify(array, i / 2, i);
+            }
+            int temp = array[arrHeapSize-1];
+            array[arrHeapSize-1] = array[0];
+            array[0] = temp;
+
+            arrHeapSize--;
+
+        }
+    }
+
+    private static void maxHeapify(int[] arr, int pos,int len) {
+
+        int child;
+        int temp = arr[pos];
+
+        //重新维护
+        int l = pos * 2;          //左子结点
+        int r = pos * 2 + 1;      //右子结点
+        for (int i = pos;pos > 0;pos--){
+            if (l <= len && arr[l-1] > arr[i-1]) {
+                temp = arr[i-1];
+                arr[i-1] = arr[l-1];
+                arr[l-1] = temp;
+            }
+            if (r <= len && arr[r - 1] > arr[i-1]) {
+                temp = arr[i-1];
+                arr[i-1] = arr[r-1];
+                arr[r-1] = temp;
+            }
+        }
     }
 
     private static void quick(int[] d,int left,int right) {
